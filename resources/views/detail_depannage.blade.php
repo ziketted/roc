@@ -8,7 +8,7 @@
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title " id="staticBackdropLabel"><i class="fas fa-car-crash"></i>DEPANNAGE </h3>
+            <h3 class="modal-title " id="staticBackdropLabel"><i class="fas fa-car-crash"></i>DEPANNAGE </h3> <button class="btn btn-info ">Etat :   {{ $item->status }}</button>
         </div>
 
         <div class="modal-body ">
@@ -39,14 +39,16 @@
 
                 <input type="text" value="{{ $item->id }}" disabled hidden>
         </div>
-        @if(auth()->user()->profile ==2 && $item->price==0)
+        @if(auth()->user()->profile ==3 && $item->price==0)
 
 
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-warning btn-lg" style="color: black !important;">Envoyer le devis <i
-                    class="far fa-paper-plane"></i></button>
-        </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning btn-lg" style="color: black !important;">Envoyer le devis <i
+                        class="far fa-paper-plane"></i></button>
+            </div>
+
         @endif
+
 
         </form>
     </div>

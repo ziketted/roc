@@ -130,7 +130,7 @@
                         <ul class="navigation-menu">
 
                             <li class="has-submenu">
-                                <a href="{{route('dashboard')}}"><i class="ti-home"></i> DASHBOARD</a>
+                                <a href="{{route('dashboard')}}"><i class="ti-home"></i> ACCUEIL</a>
                             </li>
                            {{--  <li class="has-submenu" class="text-white">
                                 <a href="{{ route('appointement.index') }}" ><i class="ion ion-md-calendar"></i> MES RENDEZ-VOUS</a>
@@ -139,7 +139,7 @@
 
 
                             <li class="has-submenu" class="text-white">
-                                <a href="{{ route('client.depannage') }}"><i class="ti-settings"></i> MES DEPANNAGES  <i class="mdi mdi-chevron-down mdi-drop"></i></a>
+                                <a href="{{ route('client.depannage') }}"><i class="ti-settings"></i> MES DEPANNAGES  </a>
 
                             </li>
 

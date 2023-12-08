@@ -31,11 +31,14 @@
                                 </tr>
                             </thead>
 
-
+                            @php
+                                $k=1
+                            @endphp
                             <tbody>
                                 @foreach ($depannages as $item)
+
                                 <tr>
-                                    <td><span class="text-muted">{{ $item->id }}</span></td>
+                                    <td><span class="text-muted">0{{ $k++}}</span></td>
                                     <td><a href="invoice.html" class="text-reset" tabindex="-1">{{ $item->name }} - {{
                                             $item->prenom }}</a>
                                     </td>

@@ -55,8 +55,12 @@
                                             <!-- ltn__language-menu -->
                                             <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
                                                 <ul>
-                                                    <li><a href="{{route('login')}}"><span class="active-currency">Se
-                                                                connecter</span></a>
+                                                   @guest
+                                                     <li><a href="{{route('login')}}"><span class="active-currency">Se
+                                                                 connecter</span></a>
+                                                    @else
+                                                        <li><a href="{{route('login')}}"><span class="active-currency">Mon compte</span></a>
+                                                   @endguest
 
                                                     </li>
                                                 </ul>

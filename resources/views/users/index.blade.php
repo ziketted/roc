@@ -31,9 +31,13 @@
 
 
                             <tbody>
+                                @php
+                                    $k=1
+                                @endphp
                                 @foreach ($users as $item)
+
                                 <tr>
-                                    <td><span class="text-muted">{{ $item->id }}</span></td>
+                                    <td><span class="text-muted">0{{ $k++}}</span></td>
                                     <td><a href="{{ route('user.show', $item->id) }}" class="text-reset"
                                             tabindex="-1">{{ $item->name }}</a>
                                     </td>

@@ -96,6 +96,17 @@ class GarageController extends Controller
         return view('garage.index', ["garages" => $garages])->with('status', 'Demande enrôlement soumise avec succès');
     }
 
+    public function suspend( $garage)
+    {
+        //
+        $gar = garage::find($garage);
+
+
+        $gar->delete();
+        $garages = garage::all();
+        return view('garage.index', ["garages" => $garages])->with('status', 'Demande enrôlement soumise avec succès');
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -103,11 +114,34 @@ class GarageController extends Controller
      * @param  \App\Models\garage  $garage
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdategarageRequest $request, garage $garage)
-    {
-        //
-    }
+     public function profile(){
+        $garages= garage::where('user_id', auth()->user()->id)->take(1)->get();
+        return view('garage.edit', ["garages" => $garages])->with('status', 'Mise à jour faite avec succès.');
+     }
 
+     public function update(Request $request)
+     {  garage::where('user_id', auth()->user()->id)->update(
+
+            [
+                 'garage' => $request->garage,
+                 'gerant' => $request->gerant,
+                 'mail' => $request->mail,
+                 'adresse' => $request->adresse,
+                 'postal' => $request->postal,
+                 'phone' => $request->phone,
+                 'ville' => $request->ville,
+                 'lat' => $request->lat,
+                 'lng' => $request->lng,
+                 'description' => $request->description,
+             ]
+
+
+     );
+
+
+
+         return redirect()->route('garage.profile')->with('status', 'Garage ajouter avec succès');
+     }
     /**
      * Remove the specified resource from storage.
      *

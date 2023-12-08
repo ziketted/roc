@@ -95,7 +95,6 @@ class AppoinementController extends Controller
     {
 
         $depannage = Appoinement::find($id);
-
         $depannage->delete();
         return redirect()->route('appointement.index')->with('status', 'Opération effectuée avec succès. ');
     }

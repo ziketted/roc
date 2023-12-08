@@ -90,8 +90,8 @@ class DepannageController extends Controller
     public function depannage(){
         $all_depannage = DB::table('depannages')
         ->join('garages', 'garages.id', '=', 'depannages.garage')
-
-        ->select('depannages.*', 'garages.phone', 'garages.garage')
+        ->where('depannages.user_id', auth()->user()->id)
+        ->select('depannages.*', 'depannages.phone', 'garages.garage')
         ->get();
 
 
@@ -102,7 +102,7 @@ class DepannageController extends Controller
 
         $all_depannage = DB::table('depannages')
         ->join('garages', 'garages.id', '=', 'depannages.garage')
-        ->select('depannages.*', 'garages.phone', 'garages.garage')
+        ->select('depannages.*', 'depannages.phone', 'garages.garage')
         ->where('depannages.user_id', auth()->user()->id)
         ->where('depannages.status','<>', 'Fini')
         ->whereNull('depannages.deleted_at')
@@ -126,11 +126,38 @@ class DepannageController extends Controller
         ->join('garages', 'garages.id', '=', 'depannages.garage')
         ->select('depannages.*', 'garages.phone', 'garages.garage')
         ->where('depannages.user_id', auth()->user()->id)
+        ->where('depannages.status', 'Fini')
         ->get();
         return view('client.parcours',[
           'depannages'=>$all_depannage] );
 
     }
+
+     public function search(Request $request )
+     {
+        $date = $request->date;
+       $query= DB::table('depannages')
+        ->join('garages', 'garages.id', '=', 'depannages.garage')
+        ->select('depannages.*', 'garages.phone', 'garages.garage')
+        ->where('depannages.user_id', auth()->user()->id)
+        ->where('depannages.status', 'Fini');
+
+        // Check if garage is provided
+        if ($request->garage) {
+            $query->where('garages.garage', 'like', '%'.$request->garage.'%');
+        }
+
+        // Check if date is provided
+        if ($date) {
+            $query->whereRaw('DATE(depannages.created_at) = ?', [$date]);
+        }
+        $all_depannage = $query->get();
+           // dd($all_depannage);
+        return view('client.parcours',[
+          'depannages'=>$all_depannage, 'garage'=>$request->garage, 'date'=>$date] );
+
+    }
+
      public function dashboard( )
      {
          //
@@ -197,6 +224,15 @@ class DepannageController extends Controller
 
         $depannage = Depannage::find($id);
         $depannage->status = 'Valider';
+        $depannage->save();
+        return redirect()->back()->with('success','');
+
+
+     }
+     public function refuser ($id){
+
+        $depannage = Depannage::find($id);
+        $depannage->status = 'Refuser';
         $depannage->save();
         return redirect()->back()->with('success','');
 
@@ -357,7 +393,7 @@ class DepannageController extends Controller
         $item = DB::table('depannages')
         ->join('garages', 'garages.id', '=', 'depannages.garage')
         ->where('depannages.id', $id)
-        ->select('depannages.*', 'garages.phone', 'garages.garage')
+        ->select('depannages.*', 'depannages.phone', 'garages.garage')
         ->get();
 
         if (!$item) {
@@ -405,10 +441,10 @@ class DepannageController extends Controller
         switch (auth()->user()->profile) {
             case '1':
                 return $this->dashboard_customer();
-            break;
+
             case '3':
                 return $this->dashboard_garage();
-            default:
+            case '2':
                 # code...
                 return $this->dashboard();
 

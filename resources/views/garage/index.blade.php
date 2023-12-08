@@ -5,9 +5,9 @@
 
         <div class="row m-5">
             <div class="col-lg-12">
-                <div class="p-2">
+               {{--  <div class="p-2">
                     <a href="{{ route('garage.create') }}" class="btn btn-info"> + Ajouter un garage</a>
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-body">
                         <h4 class="m-b-30 m-t-0">Liste des garages.</h4>
@@ -68,7 +68,14 @@
                                             <a class="btn btn-secondary" href="{{ route('garage.edit', $item->id) }}">
                                                 Valider
                                             </a>
+                                        @else
+
+                                        <a class="btn btn-primary" href="{{ route('garage.suspend', $item->id) }}">
+                                          <i class="fas fa-trash"></i>  Suspendre
+                                        </a>
+
                                         @endif
+
 
                                     </td>
 

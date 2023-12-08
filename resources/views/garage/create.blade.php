@@ -29,14 +29,15 @@
                                     <div class="col-sm-6 ">
                                         <div class="mb-3">
                                             <label class="form-label">Nom du gerant</label>
-                                            <input type="text" class="form-control" placeholder="Nom du gerant" value=""
-                                                name="gerant" required>
+                                            <input type="text" class="form-control" placeholder="Nom du gerant"
+                                                name="gerant" required  value="{{Auth::user()->name}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label class="form-label">Email address</label>
-                                            <input type="email" class="form-control" placeholder="Email" name="mail">
+                                            <input type="email" class="form-control" placeholder="Email" name="mail"
+                                             readonly required value=" {{Auth::user()->email}}">
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +70,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Secteur de base</label>
                                             <input type="test" class="form-control" placeholder="Ex : Remorquage"
-                                                name="postal" >
+                                                name="postal" required >
                                         </div>
                                     </div>
                                 </div>

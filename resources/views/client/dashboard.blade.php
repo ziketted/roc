@@ -33,27 +33,33 @@
                                     {{ $created_at->diffForHumans()}}</p>
                             </div>
                             @if($item->status=='Encours')
-                            <div class="row justify-content-md-end m-1">
+                                <div class="row justify-content-md-end m-1">
 
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end m-3 ">
-                                        <a href="{{ route('depannage.annuler', $item->id) }}" class="btn btn-primary me-md-2" type="button">Refuser le devis</a>
-                                    </div>
-
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end m-3 ">
-                                        <a href="{{ route('depannage.valider', $item->id) }}" class="btn btn-info me-md-2" type="button">Accepter le devis</a>
+                                        <a href="{{ route('depannage.annuler', $item->id) }}" class="btn btn-primary me-md-2" type="button">Annuler l'opération</a>
                                     </div>
 
                             </div>
 
 
                             @elseif($item->status=='Soumis')
+                                <div class="row justify-content-md-end m-1">
 
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end m-3 ">
+                                        <a href="{{ route('depannage.refuser', $item->id) }}" class="btn btn-primary me-md-2" type="button">Refuser le devis</a>
+                                    </div>
+
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end m-3 ">
+                                        <a href="{{ route('depannage.valider', $item->id) }}" class="btn btn-info me-md-2" type="button">Accepter le devis</a>
+                                    </div>
+                                </div>
+
+
+                            @elseif($item->status=='Valider')
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end m-3 ">
                                 <a href="{{ route('depannage.accepter', $item->id) }}" class="btn btn-warning me-md-2" style="color:black !important;"
                                     type="button"><i class="fas fa-calendar-check"></i>&nbsp;Valider le dépannage</a>
                             </div>
-                            @else
-
                             @endif
 
                         </div>

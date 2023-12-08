@@ -92,7 +92,7 @@
 
                                             <a href="route('logout')" onclick="event.preventDefault();
                                                             this.closest('form').submit();" class="dropdown-item">
-                                                {{ __('Log Out') }}
+                                                {{ __('Déconnexion') }}
                                             </a>
                                         </form>
                                     </li>
@@ -133,14 +133,14 @@
                         <ul class="navigation-menu">
 
                             <li class="has-submenu">
-                                <a href="{{route('dashboard')}}"><i class="ti-home"></i> DASHBOARD</a>
+                                <a href="{{route('dashboard')}}"><i class="ti-home"></i> Tableau de bord</a>
                             </li>
 
                             @if ( auth()->user()->profile == 2)
                             <li class="has-submenu" class="text-white">
                                 <a href="{{ route('garage.index') }}"><i class="ion ion-md-car"></i> GARAGES <i
                                         class="mdi mdi-chevron-down mdi-drop"></i></a>
-                                <ul class="submenu megamenu">
+                             {{--    <ul class="submenu megamenu">
                                     <li>
                                         <ul>
                                             <li><a href="{{ route('garage.create') }}">+ Nouveau</a></li>
@@ -150,11 +150,11 @@
                                     </li>
 
                                 </ul>
-                            </li>
+                            </li> --}}
                             @endif
                             @if ( auth()->user()->profile == 3)
                             <li class="has-submenu" class="text-white">
-                                <a href="{{ route('garage.create') }}"><i class="ion ion-md-calendar"></i> GARAGE </a>
+                                <a href="{{ route('garage.profile') }}"><i class="ion ion-md-calendar"></i>MON GARAGE </a>
                             </li>
                             @endif
                             @if ( auth()->user()->profile ==2)

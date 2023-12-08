@@ -52,12 +52,15 @@
                                 </tr>
                             </thead>
 
-
+                            @php
+                                $k=1
+                            @endphp
                             <tbody>
                                 @foreach ($quotes as $item)
+
                                 <tr>
 
-                                    <td><span class="text-muted">0{{ $item->id }}</span></td>
+                                    <td><span class="text-muted">0{{ $k++ }}</span></td>
                                     <td><a href="#" class="text-reset" tabindex="-1">{{ $item->name }} </a></td>
                                     <td>
                                         <span class="fas fas-user"></span>

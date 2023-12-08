@@ -53,12 +53,14 @@
                             </tr>
                         </thead>
 
-
+                            @php
+                                $k=1
+                            @endphp
                         <tbody>
                             @foreach ($rdv as $item)
                             <tr>
 
-                                <td><span class="text-muted">0{{ $item->id }}</span></td>
+                                <td><span class="text-muted">0{{ $k++}}</span></td>
                                 <td><a href="#" class="text-reset" tabindex="-1">{{ $item->firstname }} - {{
                                         $item->lastname
                                         }}</a></td>

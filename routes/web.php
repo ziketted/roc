@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth', 'as' => 'depannage.'], function () {
     Route::get('/depannage/{id}', [DepannageController::class, 'show'])->name('show');
     Route::get('/depannage/valider/{id}', [DepannageController::class, 'valider'])->name('valider');
     Route::get('/depannage/annuler/{id}', [DepannageController::class, 'annuler'])->name('annuler');
+    Route::get('/depannage/refuser/{id}', [DepannageController::class, 'refuser'])->name('refuser');
     Route::get('/depannage/accepter/{id}', [DepannageController::class, 'valider_depannage'])->name('accepter');
     Route::post('/depannage/pricing/{id}', [DepannageController::class, 'pricing'])->name('pricing');
     Route::get('/item-details/{id}', [DepannageController::class, 'detail_depannage'])->name('detail');
@@ -92,14 +93,21 @@ Route::group(['middleware' => 'auth', 'as' => 'depannage.'], function () {
 Route::name('client.')->group(function () {
   //customer
   Route::get('/client/depannage', [DepannageController::class, 'depannage_customer'])->name('depannage');
+  Route::post('/client/search', [DepannageController::class, 'search'])->name('search');
+
 });
 
 Route::group(['middleware' => 'auth', 'as' => 'garage.'], function () {
+
     Route::post('/garage/store', [GarageController::class, 'store'])->name('store');
+    Route::post('/garage/update', [GarageController::class, 'update'])->name('update');
     Route::get('/garage/create', [GarageController::class, 'create'])->name('create');
     Route::get('/garage/index', [GarageController::class, 'index'])->name('index');
     Route::get('/garage/edit/{id}', [GarageController::class, 'edit'])->name('edit');
+    Route::get('/garage/profile', [GarageController::class, 'profile'])->name('profile');
+    Route::get('/garage/suspend/{id}', [GarageController::class, 'suspend'])->name('suspend');
     Route::get('/garage/show/{garage}', [GarageController::class, 'show'])->name('show');
+
 });
 
 Route::name('user.')->group(function () {
