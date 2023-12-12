@@ -13,13 +13,13 @@
                             <div class="col-4">
 
                                 <input type="date" class="form-control" id="inputPassword2"
-                                    placeholder="Recherche par nom du garage" name="date" value="{{ $date }}">
+                                    placeholder="Recherche par nom du garage" name="date" value="{{ $date ?? 'default value' }}">
 
                             </div>
                             <div class="col-5">
 
                                 <input type="text" class="form-control" id="inputPassword2"
-                                    placeholder="Recherche par nom du garage" name="garage" value="{{ $garage }}">
+                                    placeholder="Recherche par nom du garage" name="garage" value="{{$garage ?? ''}}">
 
                             </div>
                             <div class="col-3 text-start">

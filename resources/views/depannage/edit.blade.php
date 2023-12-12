@@ -15,71 +15,63 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title text-dark m-0">Affectation</h3>
-                    </div>
                     <div class="card-body">
-                     @foreach ($details as $item)
-                        <div class="row">
-                            <div class="col-6">
-                                {{ $item->name }} - {{ $item->prenom }}
-                            </div>
-                            <div class="col-6">
-                                {{ $item->phone }} - {{ $item->mail }}
-                            </div>
-                        </div>
-                        <p class="mb-0">
-                            {{ $item->description }} <br>
-                            <i> {{ $item->created_at }}</i>
-                        </p><br>
-
+                        <h4 class="m-b-30 m-t-0">Les problèmes dépannés.</h4>
                         <hr>
 
-                            <form action="">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Affecter un autre garage</label>
-                                    <select class="form-control" id="mySelect" id="exampleFormControlSelect1">
-                                        <option value="{{ $item->garage }}">{{ $item->garage }}</option>
-                                        @foreach ($garages as $gr)
-                                            <option value="{{ $gr->id }}">{{ $gr->garage }}</option>
-                                        @endforeach
-                                    </select>
-                                  </div>
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                            style="border-collapse: collapse; width: 100%;">
+                            <thead>
+                                <tr>
 
-                                  <a href="#" class="btn btn-primary">Affecter au garage </a>
-
-                            </form>
-                        @endforeach
-                    </div>
-
-
-
-
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="card">
-                    <div class="card-header bg-dark">
-                        <h2 class="card-title m-0">AUTRES GARAGES PROCHES. <i class="mdi mdi-map-marker-check text-success"></i></h2>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-
-                            @forelse ($garages as $item)
-                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        {{ $item->garage }}
-                                     <span class="badge badge-dark badge-pill">{{  number_format($item->distance, 1) }} Km</span>
-                                 </li>
-                            @empty
-                                 <p>Aucun garage n'est plus proche de la position du client <b>roc</b> <i class="mdi mdi-map-marker-check text-success"></i></p>
-
-                            @endforelse
+                                    <th class="w-1">No.
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick"
+                                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M6 15l6 -6l6 6" />
+                                        </svg>
+                                    </th>
+                                    <th>Noms</th>
+                                    <th>Garage choisi</th>
+                                    <th>Téléphone</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
 
 
-                        </ul>
+                            <tbody>
+                                @php
+                                    $k=1
+                                @endphp
+                                @foreach ($depannages as $item)
+
+                                <tr>
+                                    <td><span class="text-muted">0{{ $k++ }}</span></td>
+                                    <td><a href="{{ route('depannage.show', $item->id) }}" class="text-reset"
+                                            tabindex="-1">{{ $item->name }} - {{ $item->prenom }}</a>
+                                    </td>
+                                    <td>
+                                        <span class="flag flag-country-us"></span>
+                                        {{$item->garage}}
+                                    </td>
+                                    <td>{{ $item->phone }}</td>
+
+                                    <td>
+                                        <span class="badge bg-info me-1 p-1 text-white">{{$item->status}}</span>
+                                    </td>
+
+                                </tr>
+
+                                @endforeach
+
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

@@ -168,8 +168,7 @@
                             @endif
 
                             <li class="has-submenu" class="text-white">
-                                <a href="{{ route('depannage.stack') }}"><i class="ti-settings"></i> DEPANNAGES <i
-                                        class="mdi mdi-chevron-down mdi-drop"></i></a>
+                                <a href="{{ route('depannage.stack') }}"><i class="ti-settings"></i> DEPANNAGES </a>
 
                             </li>
                             @if ( auth()->user()->profile ==2)

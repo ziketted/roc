@@ -94,9 +94,8 @@ class DepannageController extends Controller
         ->select('depannages.*', 'depannages.phone', 'garages.garage')
         ->get();
 
-
-     return view('depannage.show',['depannages'=>$all_depannage] );
-    }
+        return view('depannage.show',['depannages'=>$all_depannage] );
+    } /**/
 
     public function dashboard_customer(){
 
@@ -105,6 +104,7 @@ class DepannageController extends Controller
         ->select('depannages.*', 'depannages.phone', 'garages.garage')
         ->where('depannages.user_id', auth()->user()->id)
         ->where('depannages.status','<>', 'Fini')
+        ->where('depannages.status','<>', 'Refuser')
         ->whereNull('depannages.deleted_at')
         ->get();
 
@@ -148,13 +148,13 @@ class DepannageController extends Controller
         }
 
         // Check if date is provided
-        if ($date) {
-            $query->whereRaw('DATE(depannages.created_at) = ?', [$date]);
+        if ($request->date) {
+            $query->whereRaw('DATE(depannages.created_at) = ?', [$request->date]);
         }
-        $all_depannage = $query->get();
+         $all_depannage = $query->get();
            // dd($all_depannage);
         return view('client.parcours',[
-          'depannages'=>$all_depannage, 'garage'=>$request->garage, 'date'=>$date] );
+          'depannages'=>$all_depannage, 'garage'=>$request->garage, 'date'=>$request->date] );
 
     }
 
@@ -175,6 +175,8 @@ class DepannageController extends Controller
                 ->join('garages', 'garages.id', '=', 'depannages.garage')
 
                 ->select('depannages.*', 'garages.phone', 'garages.garage')
+            ->whereNull('depannages.deleted_at')
+
                 ->get();
                 $depannageCount = Depannage::all()->count();
                 $rdv = Appoinement::all()->count();
@@ -187,6 +189,7 @@ class DepannageController extends Controller
      //All for garage
      public function dashboard_garage( )
      {
+
          //
          //$garages=garage::all();
          $all_depannage =null;
@@ -194,15 +197,20 @@ class DepannageController extends Controller
          $users = User::where('id','<>',  auth()->user()->id)->get();
          $garages = garage::where('id','<>',  auth()->user()->id)->count();
          $userCount = User::all()->count();
-         $depannageCount = Depannage::all()->count();
+        /*  $depannageCount = Depannage::where('garage',  auth()->user()->id)->count();*/
 
+        $depannageCount = DB::table('depannages')
+                         ->join('garages', 'garages.id', '=', 'depannages.garage')
+                         ->where('depannages.status','<>', 'Encours')
+                         ->where('garages.user_id', auth()->user()->id)
+                         ->count();
         $all_depannage = DB::table('depannages')
             ->join('garages', 'garages.id', '=', 'depannages.garage')
             ->select('depannages.*', 'garages.phone', 'garages.garage')
             ->where('garages.user_id', auth()->user()->id)
+            ->whereNull('depannages.deleted_at')
             ->get();
 
-        $depannageCount = Depannage::where('id',  auth()->user()->id)->count();
         $rdv = Appoinement::where('id',  auth()->user()->id)->count();
 
         return view('dashboard',['users'=>$users, 'userCount'=>$userCount,'rdv'=>$rdv,
@@ -277,10 +285,9 @@ class DepannageController extends Controller
        $userLongitude = $data['longitude'];
        $flag = $data['country_flag'];
 
-
-   $garageAll = $this->findNearbyStations($userLatitude, $userLongitude, 0);
-   $newArray_near = [];
-   $newArray_away = [];
+       $garageAll = $this->findNearbyStations($userLatitude, $userLongitude, 0);
+       $newArray_near = [];
+       $newArray_away = [];
 
    /* dd($garageAll); */
    foreach ($garageAll as $row) {
@@ -291,10 +298,6 @@ class DepannageController extends Controller
 
        }
    }
-
-
-
-
    return view('depannage.index', ['nears'=> $newArray_near, 'away'=> $newArray_away, "flag"=>$flag])->with('results', 'Visitons');
 
 
@@ -311,7 +314,6 @@ class DepannageController extends Controller
     public function command($id)
     {
         $garages=garage::where('id',$id)->get();
-
         return view('depannage.command', ['garages'=>$garages]);
 
     }
@@ -357,7 +359,7 @@ class DepannageController extends Controller
         //
 
         //Find other garage near to customer
-        $ip=$this->addressIp();
+       /*  $ip=$this->addressIp();
         $url='https://api.ipgeolocation.io/ipgeo?apiKey=77ae8ef9200743859074dc159c3381ba&ip='.$ip;
         $response=file_get_contents($url);
         $data = json_decode($response, true);
@@ -382,8 +384,14 @@ class DepannageController extends Controller
         foreach ($details as $detail) {
             $depannageId = $detail->id;
         }
-
-        return view ('depannage.edit',['details'=>$details, 'garages'=>$newArray_near] );
+ */
+        $depannages = DB::table('depannages')
+        ->join('garages', 'garages.id', '=', 'depannages.garage')
+        ->select('depannages.*', 'garages.phone', 'garages.garage')
+        ->whereNull('depannages.deleted_at')
+        ->where('garages.user_id', auth()->user()->id)
+        ->get();
+        return view ('depannage.edit',['depannages'=>$depannages] );
 
     }
 

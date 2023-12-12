@@ -72,12 +72,9 @@ Route::name('quote.')->group(function () {
 });
 
 Route::name('depannage.')->group(function () {
-    Route::post('/depannage/store', [DepannageController::class, 'store'])->name('store');
-    Route::get('/depannage/create', [DepannageController::class, 'create'])->name('create');
-    Route::get('/depannage/stack', [DepannageController::class, 'depannage'])->name('stack');
     Route::get('/depannage/index', [DepannageController::class, 'index'])->name('index');
-    Route::get('/depannage/command/{id}', [DepannageController::class, 'command'])->name('command');
 });
+
 
 Route::group(['middleware' => 'auth', 'as' => 'depannage.'], function () {
     Route::get('/depannage/{id}', [DepannageController::class, 'show'])->name('show');
@@ -87,6 +84,10 @@ Route::group(['middleware' => 'auth', 'as' => 'depannage.'], function () {
     Route::get('/depannage/accepter/{id}', [DepannageController::class, 'valider_depannage'])->name('accepter');
     Route::post('/depannage/pricing/{id}', [DepannageController::class, 'pricing'])->name('pricing');
     Route::get('/item-details/{id}', [DepannageController::class, 'detail_depannage'])->name('detail');
+    Route::get('/depannage/command/{id}', [DepannageController::class, 'command'])->name('command');
+    Route::post('/depannage/store', [DepannageController::class, 'store'])->name('store');
+    Route::get('/depannage/create', [DepannageController::class, 'create'])->name('create');
+    Route::get('/depannage/stack', [DepannageController::class, 'depannage'])->name('stack');
 
 });
 
