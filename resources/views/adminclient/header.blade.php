@@ -81,7 +81,9 @@
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu">
-
+                                    <li><a href="javascript:void(0)" class="dropdown-item">Mon Profile</a></li>
+                                    <li><a href="javascript:void(0)" class="dropdown-item"><span class="badge badge-primary float-right p-1"><i class="fas fa-briefcase"></i></span> Abonnement </a></li>
+                                    <li><a href="javascript:void(0)" class="dropdown-item"><i class="ion ion-md-help-circle"></i> &nbsp; Assistance.</a></li>
                                     <li class="dropdown-divider"></li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
@@ -89,11 +91,13 @@
 
                                             <a href="route('logout')" onclick="event.preventDefault();
                                                             this.closest('form').submit();" class="dropdown-item">
-                                                {{ __('Log Out') }}
+                                                {{ __('Déconnexion') }}
                                             </a>
                                         </form>
                                     </li>
                                 </ul>
+
+
                             </li>
 
                             <li class="menu-item dropdown notification-list list-inline-item">

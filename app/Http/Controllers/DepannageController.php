@@ -178,7 +178,7 @@ class DepannageController extends Controller
             ->whereNull('depannages.deleted_at')
 
                 ->get();
-                $depannageCount = Depannage::all()->count();
+
                 $rdv = Appoinement::all()->count();
 
 
@@ -197,12 +197,12 @@ class DepannageController extends Controller
          $users = User::where('id','<>',  auth()->user()->id)->get();
          $garages = garage::where('id','<>',  auth()->user()->id)->count();
          $userCount = User::all()->count();
-        /*  $depannageCount = Depannage::where('garage',  auth()->user()->id)->count();*/
+        /**/  //$depannageCount = Depannage::where('garage',  auth()->user()->id)->count();
 
         $depannageCount = DB::table('depannages')
                          ->join('garages', 'garages.id', '=', 'depannages.garage')
-                         ->where('depannages.status','<>', 'Encours')
                          ->where('garages.user_id', auth()->user()->id)
+                         ->whereNull('depannages.deleted_at')
                          ->count();
         $all_depannage = DB::table('depannages')
             ->join('garages', 'garages.id', '=', 'depannages.garage')
